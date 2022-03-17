@@ -36,7 +36,7 @@ int main(){
     int n;
     int m;
     cin>>n>>m;
-    cout<<"n: "<<n<< endl;
+    cout<<"n: "<<n<<endl;
     cout<<"m: "<<m<<endl;
     vector<vector<int>> H;
     vector<char> a;
@@ -44,19 +44,24 @@ int main(){
     a.push_back(' ');
     b.push_back(' ');
 
+    cout<<"Seq1: ";
     for (int i = 1; i <n;i++){
         char temp;
         cin >> temp;
         a.push_back(temp);
+        cout<<temp;
     }
+    cout<<endl;
 
 
-
+    cout<<"Seq2: ";
     for (int j = 1; j <m;j++){
         char temp;
         cin >> temp;
         b.push_back(temp);
+        cout<<temp;
     }
+    cout<<endl;
 
     H.resize(n);
 
@@ -75,20 +80,6 @@ int main(){
         }
     }
 
-    // print da matriz
-    cout<<"  ";
-    for (int j = 0; j <m;j++){
-        cout<<b[j]<<" ";
-    }
-    cout<<endl;
-    for (int i = 0; i<n;i++){
-        cout <<a[i]<<" ";
-            for (int j = 0;j<m;j++){
-            cout<<H[i][j]<< " ";
-        }
-        cout<<endl;
-    }
-
     // encontra maior
     int i_maior;
     int j_maior;
@@ -102,7 +93,7 @@ int main(){
             }
         }
     }
-    cout<<endl<<"Maior: "<<maior<<endl<<"Posição ("<<i_maior<<","<<j_maior<<")"<<endl;
+    cout<<endl<<"Max: "<<maior<<endl<<"Posição ("<<i_maior<<","<<j_maior<<")"<<endl;
 
 
     // alinhamento local ótimo
@@ -118,7 +109,7 @@ int main(){
     posicoes.push_back(posicao);
     while(valor>0 && (i>0 && j>0)){
         Alinhamento posicao;
-        cout<<valor<<" "<<i<<" "<<j<<endl;
+        // cout<<valor<<" "<<i<<" "<<j<<endl;
         int diagonal = H[i-1][j-1];
         int delecao = H[i-1][j];
         int insercao = H[i][j-1];
@@ -142,10 +133,10 @@ int main(){
         posicao.j = j;
         posicoes.push_back(posicao);
     }
-    cout<<valor<<" "<<i<<" "<<j<<endl;
+    // cout<<valor<<" "<<i<<" "<<j<<endl;
 
     reverse(posicoes.begin(),posicoes.end());
-    cout<<endl;
+    // cout<<endl;
     // for (int i =0; i <posicoes.size();i++){
     //     cout<<posicoes[i].salto<<" "<<posicoes[i].i<<" "<<posicoes[i].j<<endl;
     // }
@@ -166,7 +157,7 @@ int main(){
             seq1.push_back(a[posicao_i+1]);
             seq2.push_back('-');
         }
-        else if(posicoes[i].salto ==2){ //inserção                        // inserção
+        else if(posicoes[i].salto ==2){ //inserção                   
             seq1.push_back('-');
             seq2.push_back(b[posicao_j+1]);
         }
