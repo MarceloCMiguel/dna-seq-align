@@ -45,7 +45,7 @@ int main(){
     b.push_back(' ');
 
     cout<<"Seq1: ";
-    for (int i = 1; i <n;i++){
+    for (int i = 1; i <=n;i++){
         char temp;
         cin >> temp;
         a.push_back(temp);
@@ -55,7 +55,7 @@ int main(){
 
 
     cout<<"Seq2: ";
-    for (int j = 1; j <m;j++){
+    for (int j = 1; j <=m;j++){
         char temp;
         cin >> temp;
         b.push_back(temp);
@@ -63,29 +63,42 @@ int main(){
     }
     cout<<endl;
 
-    H.resize(n);
+    H.resize(n+1);
 
-    for(int i = 0 ; i < n ; i++)
+    for(int i = 0 ; i <= n ; i++)
     {
         //Grow Columns by n
-        H[i].resize(m);
+        H[i].resize(m+1);
     }
     // calculando smithwaterman
-    for (int i =1; i<n;i++){
-        for (int j = 1; j < m; j++){
+    for (int i =1; i<n+1;i++){
+        for (int j = 1; j < m+1; j++){
             int diagonal = H[i-1][j-1] + w_score(a[i],b[j]);
             int delecao = H[i-1][j] - 1;
             int insercao = H[i][j-1] - 1;
             H[i][j] = max({0,diagonal,delecao,insercao});
         }
     }
+    // print da matriz
+    cout<<"  ";
+    for (int j = 0; j <=m;j++){
+        cout<<b[j]<<" ";
+    }
+    cout<<endl;
+    for (int i = 0; i<=n;i++){
+        cout <<a[i]<<" ";
+            for (int j = 0;j<=m;j++){
+            cout<<H[i][j]<< " ";
+        }
+        cout<<endl;
+    }
 
     // encontra maior
     int i_maior;
     int j_maior;
     int maior = 0;
-    for (int i =0; i<n;i++){
-        for (int j = 0; j < m; j++){
+    for (int i =0; i<=n;i++){
+        for (int j = 0; j <= m; j++){
             if (maior < H[i][j]){
                 maior = H[i][j];
                 i_maior = i;
