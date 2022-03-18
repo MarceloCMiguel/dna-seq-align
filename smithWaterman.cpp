@@ -42,8 +42,8 @@ int main(){
     vector<vector<Alinhamento>> H;
     vector<char> a;
     vector<char> b;
-    a.push_back(' ');
-    b.push_back(' ');
+    // a.push_back(' ');
+    // b.push_back(' ');
 
     cout<<"Seq1: ";
     for (int i = 1; i <=n;i++){
@@ -80,7 +80,7 @@ int main(){
 
     for (int i =1; i<n+1;i++){
         for (int j = 1; j < m+1; j++){
-            int diagonal = H[i-1][j-1].valor + w_score(a[i],b[j]);
+            int diagonal = H[i-1][j-1].valor + w_score(a[i-1],b[j-1]);
             int delecao = H[i-1][j].valor - 1;
             int insercao = H[i][j-1].valor - 1;
             H[i][j].valor = max({0,diagonal,delecao,insercao});
@@ -99,89 +99,56 @@ int main(){
                 H[i][j].salto = 2;
             }
             else{
-                H[i][j].salto = 3;
+                H[i][j].salto = -1;
             }
         }
     }
-    // print da matriz
-    cout<<"  ";
-    for (int j = 0; j <=m;j++){
-        cout<<b[j]<<" ";
-    }
-    cout<<endl;
-    for (int i = 0; i<=n;i++){
-        cout <<a[i]<<" ";
-            for (int j = 0;j<=m;j++){
-            cout<<H[i][j].valor<< " ";
-        }
-        cout<<endl;
-    }
+    // // print da matriz
+    // cout<<"  ";
+    // for (int j = 0; j <=m;j++){
+    //     cout<<b[j]<<" ";
+    // }
+    // cout<<endl;
+    // for (int i = 0; i<=n;i++){
+    //     cout <<a[i]<<" ";
+    //         for (int j = 0;j<=m;j++){
+    //         cout<<H[i][j].valor<< " ";
+    //     }
+    //     cout<<endl;
+    // }
     cout<<endl<<"Max: "<<maior<<endl<<"Posição ("<<i_maior<<","<<j_maior<<")"<<endl;
-
-
-    // alinhamento local ótimo
-
-    int i = i_maior;
-    int j = j_maior;
-    int valor = maior;
-    vector<Alinhamento> posicoes;
     Alinhamento posicao;
-    posicao.i = i;
-    posicao.j = j;
-    posicao.salto = -1;
-    posicoes.push_back(posicao);
-    while(valor>0 && (i>0 && j>0)){
-        Alinhamento posicao;
-        // cout<<valor<<" "<<i<<" "<<j<<endl;
-        int diagonal = H[i-1][j-1].valor;
-        int delecao = H[i-1][j].valor;
-        int insercao = H[i][j-1].valor;
-        if (diagonal >= delecao && diagonal >= insercao){
-            i--;
-            j--;
-            valor = diagonal;
-            posicao.salto = 0;
-        }
-        else if(delecao >= insercao){
-            i--;
-            valor = delecao;
-            posicao.salto = 1;
-        }
-        else{
-            j--;
-            valor = insercao;
-            posicao.salto = 2;
-        }
-        posicao.i = i;
-        posicao.j = j;
-        posicoes.push_back(posicao);
-    }
-    reverse(posicoes.begin(),posicoes.end());
-
+    posicao.i = i_maior;
+    posicao.j = j_maior;
+    posicao.valor = maior;
+    posicao.salto = H[i_maior][j_maior].salto;
     string seq1 = "";
     string seq2 = "";
-    i = 0;
-
-
-    for (int i =0;i< posicoes.size();i++){
-        int posicao_i = posicoes[i].i;
-        int posicao_j = posicoes[i].j;
-        if(posicoes[i].salto == 0){ //alinhamento
-            seq1.push_back(a[posicao_i+1]);
-            seq2.push_back(b[posicao_j+1]);
+    while(posicao.valor>0 && posicao.i>0 && posicao.j>0){
+        if(posicao.salto == 0){ //alinhamento
+            seq1.push_back(a[posicao.i-1]);
+            seq2.push_back(b[posicao.j-1]);
+            posicao.i--;
+            posicao.j--;
         }
-        else if(posicoes[i].salto ==1){ //deleção
-            seq1.push_back(a[posicao_i+1]);
+        else if(posicao.salto ==1){ //deleção
+            seq1.push_back(a[posicao.i-1]);
             seq2.push_back('-');
+            posicao.i--;
         }
-        else if(posicoes[i].salto ==2){ //inserção                   
+        else if(posicao.salto ==2){ //inserção                   
             seq1.push_back('-');
-            seq2.push_back(b[posicao_j+1]);
+            seq2.push_back(b[posicao.j-1]);
+            posicao.j--;
         }
+        posicao.valor = H[posicao.i][posicao.j].valor;
+        posicao.salto = H[posicao.i][posicao.j].salto;
+        
     }
-
-    cout<<seq1<<endl;
+    reverse(seq1.begin(),seq1.end());
+    reverse(seq2.begin(),seq2.end());
     cout<<seq2<<endl;
+    cout<<seq1<<endl;
     return 0;
     
 
