@@ -14,7 +14,8 @@ using namespace std;
 struct Alinhamento{
     int i;
     int j;
-    int salto; // 0 = diagonal; 1 = deleção; 2 = inserção; -1 = ultimo
+    int valor;
+    int salto; // 0 = diagonal; 1 = deleção; 2 = inserção; -1 = ultimo // 3 = vazio
 };
 
 int w_score(char a,char b){
@@ -38,7 +39,7 @@ int main(){
     cin>>n>>m;
     cout<<"n: "<<n<<endl;
     cout<<"m: "<<m<<endl;
-    vector<vector<int>> H;
+    vector<vector<Alinhamento>> H;
     vector<char> a;
     vector<char> b;
     a.push_back(' ');
@@ -70,13 +71,36 @@ int main(){
         //Grow Columns by n
         H[i].resize(m+1);
     }
+
     // calculando smithwaterman
+
+    int i_maior;
+    int j_maior;
+    int maior = 0;
+
     for (int i =1; i<n+1;i++){
         for (int j = 1; j < m+1; j++){
-            int diagonal = H[i-1][j-1] + w_score(a[i],b[j]);
-            int delecao = H[i-1][j] - 1;
-            int insercao = H[i][j-1] - 1;
-            H[i][j] = max({0,diagonal,delecao,insercao});
+            int diagonal = H[i-1][j-1].valor + w_score(a[i],b[j]);
+            int delecao = H[i-1][j].valor - 1;
+            int insercao = H[i][j-1].valor - 1;
+            H[i][j].valor = max({0,diagonal,delecao,insercao});
+            if (maior < H[i][j].valor){
+                maior = H[i][j].valor;
+                i_maior = i;
+                j_maior = j;
+            }
+            if (H[i][j].valor == diagonal){
+                H[i][j].salto = 0;
+            }
+            else if (H[i][j].valor == delecao){
+                H[i][j].salto = 1;
+            }
+            else if (H[i][j].valor == insercao){
+                H[i][j].salto = 2;
+            }
+            else{
+                H[i][j].salto = 3;
+            }
         }
     }
     // print da matriz
@@ -88,23 +112,9 @@ int main(){
     for (int i = 0; i<=n;i++){
         cout <<a[i]<<" ";
             for (int j = 0;j<=m;j++){
-            cout<<H[i][j]<< " ";
+            cout<<H[i][j].valor<< " ";
         }
         cout<<endl;
-    }
-
-    // encontra maior
-    int i_maior;
-    int j_maior;
-    int maior = 0;
-    for (int i =0; i<=n;i++){
-        for (int j = 0; j <= m; j++){
-            if (maior < H[i][j]){
-                maior = H[i][j];
-                i_maior = i;
-                j_maior = j;
-            }
-        }
     }
     cout<<endl<<"Max: "<<maior<<endl<<"Posição ("<<i_maior<<","<<j_maior<<")"<<endl;
 
@@ -123,9 +133,9 @@ int main(){
     while(valor>0 && (i>0 && j>0)){
         Alinhamento posicao;
         // cout<<valor<<" "<<i<<" "<<j<<endl;
-        int diagonal = H[i-1][j-1];
-        int delecao = H[i-1][j];
-        int insercao = H[i][j-1];
+        int diagonal = H[i-1][j-1].valor;
+        int delecao = H[i-1][j].valor;
+        int insercao = H[i][j-1].valor;
         if (diagonal >= delecao && diagonal >= insercao){
             i--;
             j--;
@@ -146,13 +156,7 @@ int main(){
         posicao.j = j;
         posicoes.push_back(posicao);
     }
-    // cout<<valor<<" "<<i<<" "<<j<<endl;
-
     reverse(posicoes.begin(),posicoes.end());
-    // cout<<endl;
-    // for (int i =0; i <posicoes.size();i++){
-    //     cout<<posicoes[i].salto<<" "<<posicoes[i].i<<" "<<posicoes[i].j<<endl;
-    // }
 
     string seq1 = "";
     string seq2 = "";
