@@ -12,7 +12,7 @@ Saída: score máximo de alinhamento
 #include <random>
 using namespace std;
 
-#define P 100
+// #define P 100
 
 struct SubstringValue{
     string substring;
@@ -65,48 +65,55 @@ int main(){
     int n;
     int m;
     cin>>n>>m;
-    cout<<"n: "<<n<<endl;
-    cout<<"m: "<<m<<endl;
+
     string a;
     string b;
     cin>> a;
-    
     cin>> b;
+    // swap para que o a sempre seje a maior sequência 
+    if (m > n){
+        a.swap(b);
+        swap(n,m);
+    }
+    cout<<"n: "<<n<<endl;
+    cout<<"m: "<<m<<endl;
     cout<<"Seq a: "<<a<<endl;
     cout<<"Seq b: "<<b<<endl;
     cout<<endl;
-    default_random_engine generator(123);
+    random_device rd;
+    unsigned seed = rd();
+    default_random_engine generator(seed);
     uniform_int_distribution<int> distribution_k(1,m);
-    // gerando numeros algumas vezes para garantir aleatoriedade
-    for(int i = 0; i <5; i++){
-        distribution_k(generator);    
-    }
     int k;
     k = distribution_k(generator);
     // tamanho de K n pode ser maior que o tamanho da outra substring a
-    while (k > a.size()){
-        k = distribution_k(generator);
-    }
+    // while (k > a.size()){
+    //     k = distribution_k(generator);
+    // }
     cout<<endl;
     cout<<"k: "<<k<<endl;
-    uniform_int_distribution<int> distribution_b(0,m-k-1);
+    uniform_int_distribution<int> distribution_b(0,m-k);
     int index_b = distribution_b(generator);
 
     uniform_int_distribution<int> distribution_a(0,n-k-1);
     string sb = create_substring(b,index_b,k);
     cout<<"Subsequence b: "<<sb<<endl;
-    uniform_int_distribution<int> distribution_p(1,P);
-    int p_ = distribution_p(generator);
-    int score = -999; // apenas para garantir que no alguma subsequencia terá um score melhor
+    // uniform_int_distribution<int> distribution_p(1,P);
+    // int p_ = distribution_p(generator);
+    int p = n - k + 1;
+    cout<<"p "<<p<<endl;
+    int score = -10^5; // apenas para garantir que alguma subsequencia terá um score melhor
     vector<SubstringValue> sa_best_values;
     // salvando apenas strings para checar se já há no sa_best_values
     vector<string> all_seqs;
     cout<<"Subsequences a generated and yours scores: [ ";
-    for (int l = 0; l<p_;l++){
+    for (int i = 0; i<p;i++){
         SubstringValue sa_temp;
+        sa_temp.substring = a.substr(i,k);
+        // cout<<sa_temp.substring<<" ";
         
-        int index_a = distribution_a(generator);
-        sa_temp.substring = create_substring(a,index_a,k);
+        // int index_a = distribution_a(generator);
+        // sa_temp.substring = create_substring(a,index_a,k);
         all_seqs.push_back(sa_temp.substring);
         sa_temp.score=calculate_score(sa_temp.substring,sb);
         if (sa_temp.score> score){
