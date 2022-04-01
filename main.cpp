@@ -149,6 +149,7 @@ int main(){
     reverse(seq2.begin(),seq2.end());
     cout<<seq2<<endl;
     cout<<seq1<<endl;
+    cout<<"Score: "<<maior<<endl;
     return 0;
     
 

@@ -135,9 +135,10 @@ int main(){
     for (int i = 0; i < sa_best_values.size(); i++)
     {
         
-        cout<<sa_best_values[i].substring<<" "<<sa_best_values[i].score<< " | ";
+        cout<<sa_best_values[i].substring<<" - "<<sa_best_values[i].score<< " | ";
     }
     cout<<"]"<<endl;
+    cout<<"Best Score: "<< score << endl;
     return 0;
     
 
