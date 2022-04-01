@@ -83,62 +83,73 @@ int main(){
     random_device rd;
     unsigned seed = rd();
     default_random_engine generator(seed);
-    uniform_int_distribution<int> distribution_k(1,m);
-    int k;
-    k = distribution_k(generator);
-    // tamanho de K n pode ser maior que o tamanho da outra substring a
-    // while (k > a.size()){
-    //     k = distribution_k(generator);
-    // }
-    cout<<endl;
-    cout<<"k: "<<k<<endl;
-    uniform_int_distribution<int> distribution_b(0,m-k);
-    int index_b = distribution_b(generator);
 
-    uniform_int_distribution<int> distribution_a(0,n-k-1);
-    string sb = create_substring(b,index_b,k);
-    cout<<"Subsequence b: "<<sb<<endl;
-    // uniform_int_distribution<int> distribution_p(1,P);
-    // int p_ = distribution_p(generator);
-    int p = n - k + 1;
-    cout<<"p "<<p<<endl;
-    int score = -10^5; // apenas para garantir que alguma subsequencia terá um score melhor
-    vector<SubstringValue> sa_best_values;
-    // salvando apenas strings para checar se já há no sa_best_values
-    vector<string> all_seqs;
-    cout<<"Subsequences a generated and yours scores: [ ";
-    for (int i = 0; i<p;i++){
-        SubstringValue sa_temp;
-        sa_temp.substring = a.substr(i,k);
-        // cout<<sa_temp.substring<<" ";
-        
-        // int index_a = distribution_a(generator);
-        // sa_temp.substring = create_substring(a,index_a,k);
-        all_seqs.push_back(sa_temp.substring);
-        sa_temp.score=calculate_score(sa_temp.substring,sb);
-        if (sa_temp.score> score){
-            score = sa_temp.score;
-            sa_best_values.clear();
-            sa_best_values.push_back(sa_temp);
-        }
-        else if(sa_temp.score == score){
-            // evitando adicionar substrings iguais na lista
-            if(!count(all_seqs.begin(),all_seqs.end(),sa_temp.substring)){
+    vector<SubstringValue> sa_best_values_global;
+    int global_score = -n; // menor valor possível
+    string best_sb;
+    int best_k;
+    for (int rep = 0; rep<100; rep++){
+        uniform_int_distribution<int> distribution_k(1,m);
+        int k;
+        k = distribution_k(generator);
+        // cout<<endl;
+        // cout<<"k: "<<k<<endl;
+        uniform_int_distribution<int> distribution_b(0,m-k);
+        int index_b = distribution_b(generator);
+        string sb = create_substring(b,index_b,k);
+        // cout<<"Subsequence b: "<<sb<<endl;
+        int p = n - k + 1;
+        // cout<<"p "<<p<<endl;
+        // salvando apenas strings para checar se já há no sa_best_values
+        vector<string> all_seqs;
+        vector<SubstringValue> sa_best_values;
+        int score = -n;
+        for (int i = 0; i<p;i++){
+            SubstringValue sa_temp;
+            sa_temp.substring = a.substr(i,k);
+            // cout<<sa_temp.substring<<" ";
+            
+            // int index_a = distribution_a(generator);
+            // sa_temp.substring = create_substring(a,index_a,k);
+            all_seqs.push_back(sa_temp.substring);
+            sa_temp.score=calculate_score(sa_temp.substring,sb);
+            if (sa_temp.score> score){
+                score = sa_temp.score;
+                sa_best_values.clear();
                 sa_best_values.push_back(sa_temp);
-            }   
+            }
+            else if(sa_temp.score == score){
+                // evitando adicionar substrings iguais na lista
+                if(!count(all_seqs.begin(),all_seqs.end(),sa_temp.substring)){
+                    sa_best_values.push_back(sa_temp);
+                }   
+            }
+            // cout<<sa_temp.substring<<" "<< sa_temp.score<<" | " ;
         }
-        cout<<sa_temp.substring<<" "<< sa_temp.score<<" | " ;
+        if (score> global_score){
+            global_score = score;
+            best_sb = sb;
+            sa_best_values_global = sa_best_values;
+            best_k = k;
+        }
     }
-    cout<<"]"<<endl<<endl;
+    
+    
 
+    
+    
+    // cout<<"Subsequences a generated and yours scores: [ ";
+    
+    // cout<<"]"<<endl<<endl;
+    cout<<"Best k: "<<best_k<<endl;
     cout<<"Best Subsequence (highers scores) [ ";
-    for (int i = 0; i < sa_best_values.size(); i++)
+    for (int i = 0; i < sa_best_values_global.size(); i++)
     {
         
-        cout<<sa_best_values[i].substring<<" - "<<sa_best_values[i].score<< " | ";
+        cout<<sa_best_values_global[i].substring<< " | ";
     }
     cout<<"]"<<endl;
-    cout<<"Best Score: "<< score << endl;
+    cout<<"Best Score: "<< global_score << endl;
     return 0;
     
 
