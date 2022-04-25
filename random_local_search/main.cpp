@@ -1,10 +1,3 @@
-/*
-ALGORITMO SMITH-WATERMAN
-Entrada: Duas sequencias de DNA a[i] e b[j], de tamanhos n e m respectivamente
-Saída: score máximo de alinhamento 
-*/
-
-
 #include <iostream>
 #include <vector>
 #include<string.h>
