@@ -158,9 +158,10 @@ int main()
             }
         }
     }
-    cout << "Score: " << max_score << endl;
+    
     cout << "Subsequence A: " << best_sub_a << endl;
     cout << "Subsequence B: " << best_sub_b << endl;
+    cout << "Score: " << max_score << endl;
 
 
 }

@@ -1,4 +1,4 @@
 4
-9
-C-CG
-G-CGCGC-G
+4
+--GC
+GACG
