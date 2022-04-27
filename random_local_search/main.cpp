@@ -81,7 +81,7 @@ int main(){
     int global_score = -n; // menor valor possível
     string best_sb;
     int best_k;
-    for (int rep = 0; rep<1; rep++){
+    for (int rep = 0; rep<100; rep++){
         uniform_int_distribution<int> distribution_k(1,m);
         int k;
         k = distribution_k(generator);
