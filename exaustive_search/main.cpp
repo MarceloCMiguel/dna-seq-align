@@ -43,9 +43,9 @@ string create_substring(string seq, int index, int random_size)
 vector<string> generate_substrings(string seq, int size)
 {
     vector<string> substrings;
-    for (int i = 0; i < size-1; i++)
+    for (int i = 0; i < size - 1; i++)
     {
-        for (int j = 1; j < size-i; j++)
+        for (int j = 1; j < size - i; j++)
         {
             substrings.push_back(seq.substr(i, j));
         }
@@ -111,8 +111,8 @@ int main()
     {
         for (int j = 0; j < size_subs_b; j++)
         {
-            int size_a = substrings_a.size();
-            int size_b = substrings_b.size();
+            int size_a = substrings_a[i].size();
+            int size_b = substrings_b[j].size();
             if (size_a == size_b)
             {
                 score = calculate_score(substrings_a[i], substrings_b[j]);
@@ -123,45 +123,9 @@ int main()
                     best_sub_b = substrings_b[j];
                 }
             }
-            else
-            {
-                bool a_bigger = true;
-                string bigger;
-                string smaller;
-                if (size_a > size_b)
-                {
-                    bigger = substrings_a[i];
-                    smaller = substrings_b[j];
-                }
-                else
-                {
-                    a_bigger = false;
-                    bigger = substrings_b[j];
-                    smaller = substrings_a[i];
-                }
-                for (int p = 0; p < (int(bigger.size()) - int(smaller.size())); p++)
-                {
-                    string bigger_cutted = bigger.substr(p, int(smaller.size()));
-                    score = calculate_score(smaller, bigger_cutted);
-                    if (score > max_score){
-                        max_score = score;
-                        if (a_bigger){
-                            best_sub_a = bigger_cutted;
-                            best_sub_b = smaller;
-                        }
-                        else{
-                            best_sub_a = smaller;
-                            best_sub_b = bigger_cutted;
-                        }
-                    }
-                }
-            }
         }
     }
-    
     cout << "Subsequence A: " << best_sub_a << endl;
     cout << "Subsequence B: " << best_sub_b << endl;
     cout << "Score: " << max_score << endl;
-
-
 }
