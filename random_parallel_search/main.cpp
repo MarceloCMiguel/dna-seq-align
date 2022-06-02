@@ -112,7 +112,7 @@ int main()
         all_seqs.resize(p);
         vector<SubstringValue> sa_best_values;
         int score = -n;
-
+#pragma omp parallel for
         for (int i = 0; i < p; i++)
         {
 
