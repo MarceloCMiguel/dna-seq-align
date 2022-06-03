@@ -11,21 +11,6 @@ struct SubstringValue
     int score;
 };
 
-int w_score(char a, char b)
-{
-    if (a == b)
-    {
-        return 2;
-    }
-    else if ((a == '-') || (b == '-'))
-    {
-        return -1;
-    }
-    else
-    {
-        return -1;
-    }
-}
 
 string create_substring(string seq, int index, int random_size)
 {
@@ -68,7 +53,7 @@ int calculate_score(string sa, string sb)
         }
         else
         {
-            score -= 2;
+            score -= 1;
         }
     }
     return score;

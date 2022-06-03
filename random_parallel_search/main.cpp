@@ -3,6 +3,7 @@
 #include <string.h>
 #include <algorithm>
 #include <random>
+#include <omp.h>
 using namespace std;
 
 // #define P 100

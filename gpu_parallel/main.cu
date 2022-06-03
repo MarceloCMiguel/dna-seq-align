@@ -21,45 +21,29 @@ struct CombinationIndex
     int size;
 };
 
-std::vector<SubstringIndex> generate_substrings_index(int len_word, int max_size)
-{
-    std::vector<SubstringIndex> substrings_index;
-    for (int i = 0; i < len_word; i++)
-    {
-        for (int size = 1; size < max_size; size++)
-        {
-            if (i + size < len_word)
-            {
-                SubstringIndex sub;
-                sub.start = i;
-                sub.size = size;
-                substrings_index.push_back(sub);
-            }
-        }
-    }
-    return substrings_index;
-}
 
 std::vector<CombinationIndex> generate_all_combinations(int len_word_a, int len_word_b, int max_size)
 {
     std::vector<CombinationIndex> combination_vector;
+    # pragma omp parallel for
     for (int size = 1; size <= max_size; size++)
     {
-        for (int start_a = 0; start_a < len_word_a; start_a++)
+        for (int start_a = 0; start_a <= len_word_a-size; start_a++)
         {
-            if (start_a + size <= max_size)
-            {
-                for (int start_b = 0; start_b < len_word_b; start_b++)
+
+                for (int start_b = 0; start_b <= len_word_b-size; start_b++)
                 {
-                    if (start_b + size <= max_size)
-                    {
+                    
                         CombinationIndex comb_index;
                         comb_index.start_a = start_a;
                         comb_index.start_b = start_b;
                         comb_index.size = size;
+                        # pragma omp critical
+                        {
                         combination_vector.push_back(comb_index);
-                    }
-                }
+                        }
+                    
+                
             }
         }
     }
@@ -127,28 +111,34 @@ int main()
     // std::vector<SubstringIndex> sub_a_index = generate_substrings_index(a.size(), b.size());
     // std::vector<SubstringIndex> sub_b_index = generate_substrings_index(b.size(), b.size());
     std::vector<CombinationIndex> list_combinations = generate_all_combinations(a.size(), b.size(), b.size());
-    // for(int i = 0; i < list_combinations.size();i++){
-    //     std::cout<<list_combinations[i].start_a<<" "<< list_combinations[i].start_b<< " "<< list_combinations[i].size << std::endl;
-    // }
-    thrust::device_vector<char> a_gpu(a);
-    thrust::device_vector<char> b_gpu(b);
-    thrust::device_vector<char> result(b);
+    
+    
+    
+    
+    thrust::host_vector<char> a_cpu(a);
+    thrust::host_vector<char> b_cpu(b);
+    thrust::device_vector<char> a_gpu(a_cpu);
+    thrust::device_vector<char> b_gpu(b_cpu);
+    thrust::device_vector<char> result(b_cpu);
     std::vector<int> scores;
     scores.resize(list_combinations.size());
+    // #pragma omp parallel for
     for (int i = 0; i < list_combinations.size(); i++)
     {
         CombinationIndex comb_index = list_combinations[i];
         int start_a = comb_index.start_a;
         int start_b = comb_index.start_b;
         int end_b = comb_index.start_b + comb_index.size;
-
+        
         // std::cout<<comb_index.start_a<< " "<< comb_index.start_b << " "<<comb_index.size<< std::endl;
         thrust::transform(b_gpu.begin() + start_b, b_gpu.begin() + end_b,
-                          a_gpu.begin() + start_a, result.begin(),
+                          a_gpu.begin() + start_a, result.begin()+start_b,
                           calculate_score_gpu());
-        int sum = thrust::reduce(result.begin(), result.begin() + comb_index.size, (int)0, thrust::plus<int>());
-        // std::cout<<sum<<std::endl;
+            
+        int sum = thrust::reduce(result.begin()+start_b, result.begin() + start_b+comb_index.size, (int)0, thrust::plus<int>());
         scores[i] = sum;
+        // std::cout<<sum<<std::endl;
+        
     }
 
     int start_a;
@@ -166,24 +156,24 @@ int main()
             score_max = scores[i];
         }
     }
-    std::vector<char> sub_a;
+    std::vector<char>sub_a;
 
-    sub_a = std::vector<char>(a.begin() + start_a, a.begin() + start_a + size);
-    std::vector<char> sub_b = std::vector<char>(b.begin() + start_b, b.begin() + start_b + size);
 
-    std::cout << "Sub A: ";
-    for (int i = 0; i < sub_a.size(); i++)
-    {
-        std::cout << sub_a[i];
+    sub_a = std::vector<char>(a.begin() + start_a, a.begin()+start_a+size);
+    std::vector<char>sub_b = std::vector<char>(b.begin() + start_b, b.begin()+start_b+size);
+
+    std::cout<<"Sub A: ";
+    for(int i = 0; i < sub_a.size(); i++){
+        std::cout<<sub_a[i];
     }
-    std::cout << std::endl;
-    std::cout << "Sub B: ";
-    for (int i = 0; i < sub_b.size(); i++)
-    {
-        std::cout << sub_b[i];
+    std::cout<<std::endl;
+    std::cout<<"Sub B: ";
+    for(int i = 0; i < sub_b.size(); i++){
+        std::cout<<sub_b[i];
     }
-    std::cout << std::endl;
-    std::cout << score_max << std::endl;
+    std::cout<<std::endl;
+    std::cout << score_max<<std::endl;
+
 
     // int sum1 = thrust::transform_reduce(a_gpu.begin(),a_gpu.end(),b_gpu.begin(),calculate_score_gpu(),0,thrust::maximum<int>());
     // int sum = thrust::reduce(result.begin(), result.end(), (int) 0, thrust::plus<int>());
