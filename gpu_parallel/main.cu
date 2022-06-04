@@ -25,7 +25,6 @@ struct CombinationIndex
 std::vector<CombinationIndex> generate_all_combinations(int len_word_a, int len_word_b, int max_size)
 {
     std::vector<CombinationIndex> combination_vector;
-    # pragma omp parallel for
     for (int size = 1; size <= max_size; size++)
     {
         for (int start_a = 0; start_a <= len_word_a-size; start_a++)
@@ -38,10 +37,9 @@ std::vector<CombinationIndex> generate_all_combinations(int len_word_a, int len_
                         comb_index.start_a = start_a;
                         comb_index.start_b = start_b;
                         comb_index.size = size;
-                        # pragma omp critical
-                        {
+                        
                         combination_vector.push_back(comb_index);
-                        }
+                        
                     
                 
             }

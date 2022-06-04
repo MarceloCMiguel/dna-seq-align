@@ -8,7 +8,7 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Fri Jun  3 20:08:23 2022
+# Make data base, printed on Sat Jun  4 18:18:46 2022
 
 # Variables
 
@@ -63,7 +63,7 @@ LC_NAME = C.UTF-8
 # environment
 VSCODE_CWD = /home/user
 # environment
-SSH_CONNECTION = 10.103.0.39 59132 10.103.3.95 22
+SSH_CONNECTION = 10.103.0.39 50250 10.103.3.95 22
 # environment
 PATH = /home/user/.vscode-server/bin/c3511e6c69bb39013c4a4b7b9566ec1ca73fc4d5/bin/remote-cli:/home/user/.local/bin:/usr/local/cuda-11.3/bin:/home/user/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
 # environment
@@ -73,7 +73,7 @@ VSCODE_LOG_STACK = false
 # environment
 LC_NUMERIC = C.UTF-8
 # environment
-VSCODE_IPC_HOOK_CLI = /run/user/1000/vscode-ipc-0675f74e-b74f-4dae-802b-ade2e33bd830.sock
+VSCODE_IPC_HOOK_CLI = /run/user/1000/vscode-ipc-c94c68f8-8a52-44a1-9c1e-25af4713a54d.sock
 # default
 .FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell archives jobserver output-sync check-symlink load
 # environment
@@ -99,7 +99,7 @@ LESSCLOSE = /usr/bin/lesspipe %s %s
 # environment
 LOGNAME = user
 # environment
-APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = 1
+APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = true
 # automatic
 +F = $(notdir $+)
 # environment
@@ -115,7 +115,7 @@ MAKECMDGOALS := all
 # environment
 SHLVL = 1
 # environment
-XDG_SESSION_ID = 1065
+XDG_SESSION_ID = 1096
 # environment
 USER = user
 # environment
@@ -139,7 +139,7 @@ MAKEFLAGS = pqrR
 # environment
 MFLAGS = -pqrR
 # environment
-SSH_CLIENT = 10.103.0.39 59132 22
+SSH_CLIENT = 10.103.0.39 50250 22
 # automatic
 +D = $(patsubst %/,%,$(dir $+))
 # environment
@@ -174,7 +174,6 @@ MAKE_HOST := x86_64-pc-linux-gnu
 LANG = C
 # environment
 VSCODE_EXTHOST_WILL_SEND_SOCKET = true
- 
 # environment
 MOTD_SHOWN = pam
 # variable set hash-table stats:
@@ -186,9 +185,9 @@ MOTD_SHOWN = pam
 
 # Directories
 
-# . (device 2050, inode 1970150): 28 files, no impossibilities.
+# . (device 2050, inode 2492392): 33 files, no impossibilities.
 
-# 28 files, no impossibilities in 1 directories.
+# 33 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -206,7 +205,7 @@ all:
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-06-02 20:17:47.229716206
+#  Last modified 2022-06-03 22:16:47.614373089
 #  File has been updated.
 #  Successfully updated.
 
@@ -237,12 +236,12 @@ main: main.cpp
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 33 / storage = 454 B / avg = 13 B
-# current buf: size = 8162 B / used = 454 B / count = 33 / avg = 13 B
+# strcache buffers: 1 (0) / strings = 38 / storage = 513 B / avg = 13 B
+# current buf: size = 8162 B / used = 513 B / count = 38 / avg = 13 B
 
-# strcache performance: lookups = 40 / hit rate = 17%
+# strcache performance: lookups = 45 / hit rate = 15%
 # hash-table stats:
-# Load=33/8192=0%, Rehash=0, Collisions=1/40=2%
-# Finished Make data base on Fri Jun  3 20:08:23 2022
+# Load=38/8192=0%, Rehash=0, Collisions=1/45=2%
+# Finished Make data base on Sat Jun  4 18:18:46 2022
 
  
