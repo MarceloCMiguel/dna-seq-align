@@ -8,7 +8,7 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Sat Jun  4 18:18:46 2022
+# Make data base, printed on Mon Jun  6 20:57:18 2022
 
 # Variables
 
@@ -63,7 +63,7 @@ LC_NAME = C.UTF-8
 # environment
 VSCODE_CWD = /home/user
 # environment
-SSH_CONNECTION = 10.103.0.39 50250 10.103.3.95 22
+SSH_CONNECTION = 10.102.7.33 59338 10.103.3.95 22
 # environment
 PATH = /home/user/.vscode-server/bin/c3511e6c69bb39013c4a4b7b9566ec1ca73fc4d5/bin/remote-cli:/home/user/.local/bin:/usr/local/cuda-11.3/bin:/home/user/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
 # environment
@@ -73,7 +73,7 @@ VSCODE_LOG_STACK = false
 # environment
 LC_NUMERIC = C.UTF-8
 # environment
-VSCODE_IPC_HOOK_CLI = /run/user/1000/vscode-ipc-c94c68f8-8a52-44a1-9c1e-25af4713a54d.sock
+VSCODE_IPC_HOOK_CLI = /run/user/1000/vscode-ipc-5ae9d8c7-e1aa-48fa-822d-58bb6b7936bf.sock
 # default
 .FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell archives jobserver output-sync check-symlink load
 # environment
@@ -115,7 +115,7 @@ MAKECMDGOALS := all
 # environment
 SHLVL = 1
 # environment
-XDG_SESSION_ID = 1096
+XDG_SESSION_ID = 1161
 # environment
 USER = user
 # environment
@@ -139,7 +139,7 @@ MAKEFLAGS = pqrR
 # environment
 MFLAGS = -pqrR
 # environment
-SSH_CLIENT = 10.103.0.39 50250 22
+SSH_CLIENT = 10.102.7.33 59338 22
 # automatic
 +D = $(patsubst %/,%,$(dir $+))
 # environment
@@ -150,6 +150,7 @@ VSCODE_HANDLES_SIGPIPE = true
 MAKEFILES := 
 # automatic
 <F = $(notdir $<)
+ 
 # automatic
 ^F = $(notdir $^)
 # environment
@@ -200,6 +201,7 @@ all:
 #  Command line target.
 #  Implicit rule search has been done.
 #  File does not exist.
+ 
 #  File has not been updated.
 
 # Not a target:
@@ -242,6 +244,7 @@ main: main.cpp
 # strcache performance: lookups = 45 / hit rate = 15%
 # hash-table stats:
 # Load=38/8192=0%, Rehash=0, Collisions=1/45=2%
-# Finished Make data base on Sat Jun  4 18:18:46 2022
+ 
+# Finished Make data base on Mon Jun  6 20:57:18 2022
 
  

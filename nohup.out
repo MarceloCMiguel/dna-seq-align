@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "calculate_time.py", line 58, in <module>
+    list_execute = get_list_program(list_alg,list_inputs)
+  File "calculate_time.py", line 44, in get_list_program
+    'Saida':int(proc.stdout.split()[-1]),
+ValueError: invalid literal for int() with base 10: 'TGGCAGGC-GT--CCAACCGAGGCCCTTAG-GACTTCAAGTGCGACGGGTGCCCTGCCGG-ATAC-AGTGTGCGAC----CG-ACAA-TGCCC-G-TTCCGC--CTTCGTG-A-CAGCTGTGCCTATA-AGGTTTTA--AGTCAATTGA-TAT--GG--G-ACCACATG-TGT-TAGGG-C-CG--TCCA-TCC-GTTG
